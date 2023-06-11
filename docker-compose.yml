@@ -1,0 +1,66 @@
+version: '3.8'
+
+# Application Services
+services:
+
+  # PHP Service
+  app:
+    container_name: shace-api-v2
+    image: ghcr.io/shace-co/api.shace.co:latest
+    volumes:
+      - persistent:/var/www/html:delegated
+      - /home/shace/storage/:/var/www/html/storage/:delegated
+    environment:
+      SERVICE_NAME: api
+      SERVICE_TAGS: dev
+    working_dir: /var/www/html
+    env_file:
+      - stack.env
+    networks:
+      - shace-network
+
+ #Nginx Service
+  webserver:
+    container_name: shace-webserver-v2
+    image: "ghcr.io/deets-pro/docker_nginx_webserver_image:latest"
+    volumes:
+      - persistent:/var/www/html:delegated
+      - /home/shace/storage/:/var/www/html/storage/:delegated
+    ports:
+      - "${NGINX_PORT}:80"
+    env_file:
+      - stack.env
+    networks:
+      - shace-network
+    depends_on:
+      - app
+
+  frontend:
+    container_name: shace-frontend-v2
+    image: "ghcr.io/shace-co/www.shace.co:latest"
+    ports:
+      - "${FRONTEND_PORT}:${NUXT_PORT}"
+    env_file:
+      - stack.env
+    networks:
+      - shace-network
+    depends_on:
+      - webserver
+
+  html_2_pdf_service:
+    container_name: "html2pdf.6d.com.sa"
+    image: "ghcr.io/shace-co/js_node_html_to_pdf_service:latest"
+    ports:
+      - "${HTML_SERVICE_PORT}:8080"
+    env_file:
+      - stack.env
+    networks:
+      - shace-network
+
+#Docker Networks
+networks:
+  shace-network:
+    driver: bridge
+
+volumes:
+  persistent: {}
