@@ -1,6 +1,6 @@
 version: '3.8'
 
-# Application Services (PHP, Nginx, Frontend, etc)
+# Application Services (PHP, Nginx, Frontend)
 services:
 
   # PHP Service
