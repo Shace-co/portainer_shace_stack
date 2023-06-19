@@ -3,7 +3,7 @@ version: '3.8'
 # Application Services (PHP, Nginx, Frontend)
 services:
 
-  # PHP Service
+  # PHP Service .. 
   app:
     container_name: shace-api-v2
     image: ghcr.io/shace-co/api.shace.co:latest
@@ -19,7 +19,7 @@ services:
     networks:
       - shace-network
 
- #Nginx Service
+ #Nginx Service .. 
   webserver:
     container_name: shace-webserver-v2
     image: "ghcr.io/deets-pro/docker_nginx_webserver_image:latest"
