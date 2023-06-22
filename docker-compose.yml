@@ -6,7 +6,7 @@ services:
   # PHP Service .
   app:
     container_name: shace-api-v2
-    image: ghcr.io/shace-co/api.shace.co:latest
+    image: ghcr.io/shace-co/api.shace.co
     volumes:
       - persistent:/var/www/html:delegated
       - /home/shace/storage/:/var/www/html/storage/:delegated
@@ -24,7 +24,7 @@ services:
  #Nginx Service .
   webserver:
     container_name: shace-webserver-v2
-    image: "ghcr.io/deets-pro/docker_nginx_webserver_image:latest"
+    image: "ghcr.io/deets-pro/docker_nginx_webserver_image"
     volumes:
       - persistent:/var/www/html:delegated
       - /home/shace/storage/:/var/www/html/storage/:delegated
